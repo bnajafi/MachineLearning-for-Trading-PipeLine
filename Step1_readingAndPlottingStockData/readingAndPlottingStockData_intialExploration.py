@@ -27,4 +27,20 @@ dates = pd.date_range(start_date,end_date)
 df1 = pd.DataFrame(index=dates)
 df1.head()
 companySymbol_2 = "SPY"
-DF_SPY = pd.read_csv("/Data/{}.csv".format(companySymbol_2)
+df_SPY = pd.read_csv("Data/{}.csv".format(companySymbol_2),index_col="Date",parse_dates=True,usecols=["Date","Adj Close"],na_values="nan")
+df_SPY.rename({"Adj Close":"SPY"},inplace=True)
+df_SPY.head()
+
+# NOw let's join
+df1=df1.join(df_SPY,how="inner" )
+
+df1.dropna()
+
+#Now let's do the same with other datasets
+
+CompanySymbols = ["GOOG", "IBM", "GLD"]
+for companySymbol in CompanySymbols:
+    df_company = pd.read_csv("Data/{}.csv".format(companySymbol),index_col="Date",parse_dates=True,usecols=["Date","Adj Close"],na_values="nan")
+    df_company.rename({"Adj Close":companySymbol})
+    df1=df1.join(df_company,how="inner" )
+    
