@@ -21,7 +21,7 @@ plt.xlabel("time")
 plt.legend()
 
 start_date = "2010-01-22"
-end_date = "2010-01-26"
+end_date = "2012-12-31"
 
 dates = pd.date_range(start_date,end_date)
 df1 = pd.DataFrame(index=dates)
@@ -43,4 +43,20 @@ for companySymbol in CompanySymbols:
     df_company = pd.read_csv("Data/{}.csv".format(companySymbol),index_col="Date",parse_dates=True,usecols=["Date","Adj Close"],na_values="nan")
     df_company.rename(columns={"Adj Close":companySymbol},inplace=True)
     df1=df1.join(df_company,how="inner" )
-    
+plt.close("all")
+plt.figure()
+ax=df1.plot(title="Stock Prices",fontsize=12)  
+ax.set_xlabel("Time")
+ax.set_ylabel("Price")
+
+#Let's normalize aevery Things
+df1_normalized =(df1-df1.min())/(df1.max()-df1.min())
+
+plt.close("all")
+plt.figure()
+ax=df1_normalized.plot(title="Stock Prices",fontsize=12)  
+ax.set_xlabel("Time")
+ax.set_ylabel("Price")
+
+print df1.describe()
+

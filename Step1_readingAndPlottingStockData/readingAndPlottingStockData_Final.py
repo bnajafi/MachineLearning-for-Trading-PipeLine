@@ -39,7 +39,7 @@ def test_run():
     for CompanySymbol in ["AAPL", "IBM"]:
         print CompanySymbol, get_max_close(CompanySymbol)
    
-    dates = pd.date_range('2010-01-22', '2010-01-26')
+    dates = pd.date_range('2010-01-01', '2010-12-31')
     # Choose stock symbols to read
     symbols = ['GOOG', 'IBM', 'GLD']
     # Get stock data
